@@ -8,6 +8,10 @@ function build() {
   sh("tsc");
 }
 
+function lint() {
+  sh("tslint -c tslint.json 'src/**/*.ts'")
+}
+
 const dev = {
   build() {
     sh("webpack --mode development --watch", {async: true});
@@ -29,5 +33,6 @@ const dev = {
 
 cli({
   clean,
+  lint,
   dev
 });

@@ -1,4 +1,5 @@
 import * as Song from './song'
+import {printLine} from "tslint/lib/verify/lines";
 
 // https://pages.mtu.edu/~suits/notefreqs.html
 // octaves --> notes
@@ -42,6 +43,15 @@ class Player {
         this.gain.gain.linearRampToValueAtTime(0, ct + 0.25)
         on.start(ct)
         on.stop(ct+0.4)
+
+        const a: number = 0o3333
+
+
+        if(on != null) {
+            return
+        } else {
+            console.log("alaa")
+        }
 
     }
 }
