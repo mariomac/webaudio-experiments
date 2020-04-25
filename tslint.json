@@ -2,12 +2,10 @@
     "defaultSeverity": "warn",
     "extends": [
         "tslint-microsoft-contrib/recommended",
-        "tslint-consistent-codestyle",
         "tslint:recommended"
     ],
     "jsRules": {},
     "rules": {
-        "naming-convention": true
     },
     "rulesDirectory": [
     ]

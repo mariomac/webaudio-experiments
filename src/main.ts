@@ -29,6 +29,9 @@ class Player {
     }
 
     public playNote(o: number, p: string) {
+        new OscillatorNode(ctx, {
+
+        })
         const on = this.ctx.createOscillator()
         //const gain = this.ctx.createGain()
         //gain.connect(this.ctx.destination)
@@ -45,14 +48,6 @@ class Player {
         on.stop(ct+0.4)
 
         const a: number = 0o3333
-
-
-        if(on != null) {
-            return
-        } else {
-            console.log("alaa")
-        }
-
     }
 }
 
