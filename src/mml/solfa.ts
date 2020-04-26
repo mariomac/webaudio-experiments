@@ -1,7 +1,7 @@
 type Pitch = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
 type Halftone = '+' | '-'
 
-interface Note {
+export interface Note {
     pitch?: Pitch // if no pitch, it's a silence
     halftone?: Halftone
     length: number // as a divisor. 1 == whole note
@@ -20,15 +20,14 @@ const minLength = 1
 const maxLength = 64
 const defaultLength = 4
 
-export class TabException {
+export class TabException extends Error {
     public readonly token: string
     public position: number
-    public readonly message: string
 
     constructor(token: string, position: number, message: string) {
+        super(message);
         this.token = token;
         this.position = position;
-        this.message = message;
     }
 }
 

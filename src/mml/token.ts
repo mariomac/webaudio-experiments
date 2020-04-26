@@ -5,6 +5,8 @@ const tokens = /(@\w+)|(<-)|\S+|\|+/
 export class Tokenizer {
     rest: string // input that is is still not read
     last: string // last read token
+    col: number // TODO position of the last read token
+    row: number
 
     constructor(input: string) {
         this.rest = input;

@@ -1,3 +1,5 @@
+import * as Tone from 'tone'
+
 import * as Song from './song'
 import {printLine} from "tslint/lib/verify/lines";
 
@@ -29,9 +31,6 @@ class Player {
     }
 
     public playNote(o: number, p: string) {
-        new OscillatorNode(ctx, {
-
-        })
         const on = this.ctx.createOscillator()
         //const gain = this.ctx.createGain()
         //gain.connect(this.ctx.destination)
