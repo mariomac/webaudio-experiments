@@ -1,3 +1,3 @@
 ```
-npx task clean && npx task dev:server
+npm run clean && npm run devserver
 ```

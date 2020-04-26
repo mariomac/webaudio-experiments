@@ -12,6 +12,10 @@ function lint() {
   sh("tslint -c tslint.json 'src/**/*.ts'")
 }
 
+function test() {
+  sh("jest")
+}
+
 const dev = {
   build() {
     sh("webpack --mode development --watch", {async: true});
@@ -34,5 +38,6 @@ const dev = {
 cli({
   clean,
   lint,
-  dev
+  dev,
+  test
 });
