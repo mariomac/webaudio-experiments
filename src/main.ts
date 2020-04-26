@@ -1,81 +1,32 @@
-import * as Tone from 'tone'
+import * as Tone from 'tone';
+import {Tokenizer} from "./mml/token";
+import {Ast} from "./mml/ast";
+import {ToneExporter} from "./mml/export";
 
-import * as Song from './song'
-import {printLine} from "tslint/lib/verify/lines";
+document.getElementById("play")!.onclick = () => {
+    const ta = document.getElementById("mmlstring")! as HTMLTextAreaElement
+    const mmldesc = ta.value
+    console.log(mmldesc)
 
-// https://pages.mtu.edu/~suits/notefreqs.html
-// octaves --> notes
-const frequencies = [
-    {},
-    {},
-    {},
-    {}, // only octave 4 atm
-    {
-        'c':261.63,
-        'd':293.66,
-        'e':329.63,
-        'f':349.23,
-        'g':392.00,
-        'a':440,
-        'b':493.88,
-    },
-]
+    var synth = new Tone.PolySynth()
+        .toDestination()
 
-class Player {
-    private readonly ctx : AudioContext
-    private readonly gain: GainNode
-    constructor() {
-        this.ctx = new AudioContext()
-        this.gain = this.ctx.createGain()
-        this.gain.connect(this.ctx.destination)
+    const song = new ToneExporter()
+        .export(new Ast(new Tokenizer(mmldesc)).parse())
+    console.log(song)
+    let parts = new Array<Tone.Part>()
+    for (let channel of Object.values(song)) {
+        //Song.Song[Song.Song.length] = undefined //insert end of song mark
+        parts.push(new Tone.Part(function (time, event) {
+            //the events will be given to the callback with the time they occur
+            synth.triggerAttackRelease(event.note, event.duration, time)
+        }, channel))
     }
 
-    public playNote(o: number, p: string) {
-        const on = this.ctx.createOscillator()
-        //const gain = this.ctx.createGain()
-        //gain.connect(this.ctx.destination)
-        // @ts-ignore
-        on.frequency.value = frequencies[o][p]
-        on.connect(this.gain)
-        const ct = this.ctx.currentTime
-        this.gain.gain.setValueAtTime(0, ct)
-        this.gain.gain.linearRampToValueAtTime(0.8, ct + 0.05)
-        this.gain.gain.linearRampToValueAtTime(0.6, ct + 0.1)
-        this.gain.gain.linearRampToValueAtTime(0.6, ct + 0.2)
-        this.gain.gain.linearRampToValueAtTime(0, ct + 0.25)
-        on.start(ct)
-        on.stop(ct+0.4)
-
-        const a: number = 0o3333
-    }
+//start the part at the beginning of the Transport's timeline
+    Tone.Transport.bpm.value = 180
+    parts.forEach(it => {
+        it.start()
+    })
+    Tone.Transport.start()
 }
-
-function playAudio() {
-    const player = new Player()
-    const player2 = new Player()
-
-    setTimeout(() => {
-        player.playNote(4, 'c')
-        player2.playNote(4, 'b')
-    }, 0)
-    setTimeout(() => {
-        player.playNote(4, 'd')
-        player2.playNote(4, 'a')
-    }, 500)
-    setTimeout(() => {
-        player.playNote(4, 'e')
-        player2.playNote(4, 'e')
-    }, 1000)
-    setTimeout(() => {player.playNote(4, 'f')}, 1500)
-    setTimeout(() => {player.playNote(4, 'g')}, 2000)
-    setTimeout(() => {player.playNote(4, 'a')}, 2500)
-    setTimeout(() => {player.playNote(4, 'b')}, 3000)
-}
-
-document.documentElement.onmousedown = () => {
-    playAudio()
-}
-
-
-//document.querySelector('audio').onplay =  addEventListener("click", play)
-

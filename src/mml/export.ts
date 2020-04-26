@@ -33,7 +33,7 @@ export class ToneExporter implements SongExporter<ToneSong> {
                 const n : ToneNote = {
                     duration: `${note.length}n`,
                     note: note.pitch,
-                    time: Math.floor(sixteenths/8),
+                    time: sixteenths/8,
                     velocity: 1
                 }
                 switch (note.halftone) {
