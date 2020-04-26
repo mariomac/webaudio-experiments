@@ -1,8 +1,8 @@
 {
     "defaultSeverity": "warn",
     "extends": [
-        "tslint-microsoft-contrib/recommended",
-        "tslint:recommended"
+        "tslint-microsoft-contrib/recommended"
+        //"tslint:recommended"
     ],
     "jsRules": {},
     "rules": {

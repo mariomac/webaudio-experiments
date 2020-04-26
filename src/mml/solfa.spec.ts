@@ -1,12 +1,19 @@
-import {parse, TabException} from './solfa'
+import {Note, parse, TabException} from './solfa'
 
 test('correct tab parse', () => {
     expect(parse("a16{abc}3b32co3a<b#3c-")).not.toBeNull()
 })
 
+test('parse tuplets', () => {
+    expect(parse("{ab8>c16}3")).toStrictEqual([
+        <Note>{pitch: 'A', length:4, octave: 4, tuplet: 3},
+        <Note>{pitch: 'B', length:8, octave: 4, tuplet: 3},
+        <Note>{pitch: 'C', length:16, octave: 5, tuplet: 3},
+    ])
+})
 
 describe('parse tab with exceptions', () => {
-    test.each `
+    test.each`
         description | inputTab | errPosition 
         ${"invalid chars"} | ${"z56"} | ${0}
         ${"length after halftone"} | ${"O5cde#88"} | ${4}
@@ -23,10 +30,10 @@ describe('parse tab with exceptions', () => {
     `(
         '$description: should return error at position $errPosition',
         ({inputTab, errPosition}) => {
-            let ex : TabException
+            let ex: TabException
             try {
                 parse(inputTab)
-            } catch(exc) {
+            } catch (exc) {
                 expect(exc).toBeInstanceOf(TabException)
                 ex = exc
             }

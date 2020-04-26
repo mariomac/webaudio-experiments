@@ -83,7 +83,7 @@ function parseSubString(tab: string, status: ChannelStatus): Note[] {
                 break
             case '{':
                 try {
-                    notes.concat(parseTuplet(token, status))
+                    notes.push(...parseTuplet(token, status))
                 } catch (ex) {
                     if (ex instanceof TabException) {
                         // increase the index for proper indication

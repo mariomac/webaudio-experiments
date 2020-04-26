@@ -48,7 +48,7 @@ export class ToneExporter implements SongExporter<ToneSong> {
                 toneNotes.push(n)
             }
             let length = 16.0 / note.length
-            if (note.tuplet !== undefined && note.tuplet >= 3) {
+            if (note.tuplet != null && note.tuplet >= 3) {
                 length *= (note.tuplet-1) / note.tuplet
             }
             sixteenths += length
