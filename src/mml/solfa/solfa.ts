@@ -20,10 +20,10 @@ const minLength = 1
 const maxLength = 64
 const defaultLength = 4
 
-class TabException {
-    token: string
-    position: number
-    message: string
+export class TabException {
+    public readonly token: string
+    public position: number
+    public readonly message: string
 
     constructor(token: string, position: number, message: string) {
         this.token = token;
@@ -33,13 +33,13 @@ class TabException {
 }
 
 const tokenizer = new RegExp('^(' +
-    '(([a-zA-Z])([+\-#]?)(\d*))' + // note, octave, silence...
+    "(([a-zA-Z])([+\\-#]?)(\\d*))" + // note, octave, silence...
     '|([<>])' + // increase/decrease octave
-    '|\s+|\|' + // spaces or vertical bars are ignored
-    '|(\{[^\{}]*}\d+)' + // anything into brackets followed by a number: tuplet
-    +')')
+    '|\\s+|\\|' + // spaces or vertical bars are ignored
+    '|(\\{[^\\{}]*}\\d+)' + // anything into brackets followed by a number: tuplet
+    ')')
 
-function parse(tab: string): Note[] {
+export function parse(tab: string): Note[] {
     return parseSubString(tab, {octave: defaultOctave})
 }
 
