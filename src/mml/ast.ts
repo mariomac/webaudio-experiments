@@ -5,7 +5,7 @@ export interface Song {
     channels: Map<string, Channel>
 }
 
-interface Channel {
+export interface Channel {
     name: string
     notes: Note[]
 }
