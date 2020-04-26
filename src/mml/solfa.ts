@@ -97,6 +97,7 @@ function parseSubString(tab: string, status: ChannelStatus): Note[] {
             case ' ':
             case '\t':
             case '\n':
+            case '|':
                 // just ignore
                 break
             default:
